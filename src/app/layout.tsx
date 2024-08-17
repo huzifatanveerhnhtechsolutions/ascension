@@ -16,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="bg-[#F5EDDA] font-sans max-w-screen-2xl mx-auto overflow-x-hidden">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
