@@ -4,13 +4,24 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 type Villager = {
-  name: string;
-  secondName: string;
+  fname: string;
+  email: string;
+};
+type CandleR = {
+  fname: string;
+  email: string;
+};
+type TimeR = {
+  fname: string;
+  email: string;
 };
 type Props = {
-  handleSubmit: () => void;
+  handleSubmit: (e: any) => void;
   handleActivePrev: () => void;
-
+  timeKeeper: TimeR;
+  setTimeKeeper: React.Dispatch<React.SetStateAction<TimeR>>;
+  candleReader: CandleR;
+  setCandleReader: React.Dispatch<React.SetStateAction<CandleR>>;
   setVillagerInputs: React.Dispatch<React.SetStateAction<Villager[]>>;
   villagerInputs: Villager[];
 };
@@ -18,21 +29,23 @@ type Props = {
 const Active2 = ({
   handleSubmit,
   handleActivePrev,
-
+  timeKeeper,
+  setTimeKeeper,
+  candleReader,
+  setCandleReader,
   villagerInputs,
   setVillagerInputs,
 }: Props) => {
   const handleAddInput = (e: any) => {
     e.preventDefault();
     if (villagerInputs.length < 24) {
-      setVillagerInputs([...villagerInputs, { name: "", secondName: "" }]);
+      setVillagerInputs([...villagerInputs, { fname: "", email: "" }]);
     }
-    console.log(villagerInputs);
   };
 
   const handleInputChange = (
     index: number,
-    field: "name" | "secondName",
+    field: "fname" | "email",
     value: string
   ) => {
     const newInputs = [...villagerInputs];
@@ -81,7 +94,7 @@ const Active2 = ({
       </div>
     </div> */}
         <div className="pt-8">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex justify-between mb-12 space-x-4 ">
               <div className="relative w-1/2">
                 <label
@@ -90,16 +103,32 @@ const Active2 = ({
                   Identify Time Keeper
                 </label>
                 <input
-                  placeholder="name
+                  placeholder="Full name
                 "
+                  value={timeKeeper.fname}
+                  onChange={(e) =>
+                    setTimeKeeper((prev) => ({
+                      ...prev,
+                      fname: e.target.value,
+                    }))
+                  }
+                  required
                   type="text"
                   className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black `}
                 />
               </div>
               <div className="relative w-1/2">
                 <input
-                  placeholder="name
+                  placeholder="Email
                 "
+                  value={timeKeeper.email}
+                  onChange={(e) =>
+                    setTimeKeeper((prev) => ({
+                      ...prev,
+                      email: e.target.value,
+                    }))
+                  }
+                  required
                   type="text"
                   className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black `}
                 />
@@ -114,16 +143,30 @@ const Active2 = ({
                   Identify Candle Reader
                 </label>
                 <input
-                  placeholder="name
+                  placeholder="Full name
                 "
+                  value={candleReader.fname}
+                  onChange={(e) =>
+                    setCandleReader((prev) => ({
+                      ...prev,
+                      fname: e.target.value,
+                    }))
+                  }
                   type="text"
                   className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black `}
                 />
               </div>
               <div className="relative w-1/2">
                 <input
-                  placeholder="name
+                  placeholder="Email
                 "
+                  value={candleReader.email}
+                  onChange={(e) =>
+                    setCandleReader((prev) => ({
+                      ...prev,
+                      email: e.target.value,
+                    }))
+                  }
                   type="text"
                   className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black `}
                 />
@@ -141,11 +184,12 @@ const Active2 = ({
                       Villager {index + 1}
                     </label>
                     <input
-                      placeholder="First Name"
+                      placeholder="Full Name"
                       type="text"
-                      value={input.name}
+                      value={input.fname}
+                      required
                       onChange={(e) =>
-                        handleInputChange(index, "name", e.target.value)
+                        handleInputChange(index, "fname", e.target.value)
                       }
                       className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black`}
                     />
@@ -156,11 +200,12 @@ const Active2 = ({
                       className={`absolute left-0 font-medium text-xs -top-6 transition-all duration-300`}
                     ></label>
                     <input
-                      placeholder="Second Name"
+                      placeholder="Email"
                       type="text"
-                      value={input.secondName}
+                      value={input.email}
+                      required
                       onChange={(e) =>
-                        handleInputChange(index, "secondName", e.target.value)
+                        handleInputChange(index, "email", e.target.value)
                       }
                       className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black`}
                     />
@@ -170,7 +215,7 @@ const Active2 = ({
 
               <button
                 onClick={handleAddInput}
-                className="bg-gray-800 backdrop-blur-xl text-white font-bold py-2 px-4 rounded"
+                className="bg-black bg-opacity-20 border border-dashed backdrop-blur-xl text-white font-bold py-3 px-4 rounded"
                 disabled={villagerInputs.length >= 24}
               >
                 Add Villager
@@ -184,7 +229,8 @@ const Active2 = ({
                 Previous
               </button>
               <button
-                onClick={handleSubmit}
+                type="submit"
+                // onClick={handleSubmit}
                 className="bg-[#E30613] w-full md:w-[50%] py-3 font-mulish font-bold rounded-full rounded-tl-none"
               >
                 Send

@@ -10,8 +10,11 @@ const layout = ({
   return (
     <div className="h-screen">
       <Navbar />
-      <div className="flex">
-        <Sidebar /> <div className="w-[78%] overflow-x-hidden">{children}</div>
+      <div className="flex gap-4">
+        <div className="w-[15%] lg:w-[22%]">
+          <Sidebar />
+        </div>{" "}
+        <div className="w-[78%] overflow-x-hidden">{children}</div>
       </div>
     </div>
   );

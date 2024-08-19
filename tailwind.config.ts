@@ -22,6 +22,7 @@ const config: Config = {
         saira: ["Saira"],
         ubuntu: ["Ubuntu"],
         publicsans: ["Public Sans"],
+        opensans: ["Open Sans"],
       },
     },
   },

@@ -3,11 +3,24 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+type DOB = {
+  month: string;
+  year: string;
+};
+type ChildInfo = {
+  name: string;
+  dob: DOB;
+  school: string;
+  email: string;
+  ascensionDate: string;
+};
 type Props = {
-  handleActive: () => void;
+  handleActive: (e: any) => void;
+  childInfo: ChildInfo;
+  setChildInfo: React.Dispatch<React.SetStateAction<ChildInfo>>;
 };
 
-const Active1 = ({ handleActive }: Props) => {
+const Active1 = ({ handleActive, childInfo, setChildInfo }: Props) => {
   return (
     <div className=" relative flex flex-col gap-4 py-8 justify-center w-full items-center overflow-hidden  ">
       <div className=" bg-[#2B3C58] text-white w-full   rounded-[20px] p-8">
@@ -48,7 +61,7 @@ const Active1 = ({ handleActive }: Props) => {
       </div>
     </div> */}
         <div className="pt-8">
-          <form>
+          <form onSubmit={handleActive}>
             <div className="relative mb-14 ">
               <label
                 className={`absolute left-0 font-medium text-xs  -top-6 transition-all  duration-300  `}
@@ -58,7 +71,11 @@ const Active1 = ({ handleActive }: Props) => {
               <input
                 placeholder="name
                 "
+                value={childInfo.name}
                 type="text"
+                onChange={(e) =>
+                  setChildInfo((prev) => ({ ...prev, name: e.target.value }))
+                }
                 className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black `}
               />
             </div>
@@ -71,6 +88,14 @@ const Active1 = ({ handleActive }: Props) => {
                   DOB
                 </label>
                 <select
+                  required
+                  value={childInfo.dob.month}
+                  onChange={(e) =>
+                    setChildInfo((prev) => ({
+                      ...prev,
+                      dob: { ...prev.dob, month: e.target.value },
+                    }))
+                  }
                   className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black`}
                 >
                   <option value="" disabled selected>
@@ -94,6 +119,14 @@ const Active1 = ({ handleActive }: Props) => {
               {/* Year Dropdown */}
               <div className="relative w-1/2">
                 <select
+                  required
+                  value={childInfo.dob.year}
+                  onChange={(e) =>
+                    setChildInfo((prev) => ({
+                      ...prev,
+                      dob: { ...prev.dob, year: e.target.value },
+                    }))
+                  }
                   className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black`}
                 >
                   <option value="" disabled selected>
@@ -117,6 +150,11 @@ const Active1 = ({ handleActive }: Props) => {
                 Grade in School
               </label>
               <input
+                required
+                value={childInfo.school}
+                onChange={(e) =>
+                  setChildInfo((prev) => ({ ...prev, school: e.target.value }))
+                }
                 placeholder="School"
                 type="text"
                 className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black `}
@@ -129,6 +167,11 @@ const Active1 = ({ handleActive }: Props) => {
                 Child's email address
               </label>
               <input
+                required
+                value={childInfo.email}
+                onChange={(e) =>
+                  setChildInfo((prev) => ({ ...prev, email: e.target.value }))
+                }
                 placeholder="email address"
                 type="text"
                 className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black `}
@@ -141,6 +184,14 @@ const Active1 = ({ handleActive }: Props) => {
                 Ascension Date
               </label>
               <input
+                required
+                value={childInfo.ascensionDate}
+                onChange={(e) =>
+                  setChildInfo((prev) => ({
+                    ...prev,
+                    ascensionDate: e.target.value,
+                  }))
+                }
                 placeholder="Ascension Date"
                 type="text"
                 className={`w-full rounded-lg font-poppins text-xs focus:border-blue-400 border-2 px-3 py-3 transition-all outline-none duration-300 text-black `}
@@ -149,7 +200,8 @@ const Active1 = ({ handleActive }: Props) => {
 
             <div className=" flex justify-center mt-16">
               <button
-                onClick={handleActive}
+                type="submit"
+                // onClick={handleActive}
                 className="bg-[#E30613] w-full md:w-[50%] py-3 font-mulish font-bold rounded-full rounded-tl-none"
               >
                 Next
